@@ -15,8 +15,8 @@ module.exports.loop = function () {
     }
 
     const minNumberOfHarvesters = 5;
-    const minNumberOfBuilders = 3;
-    const minNumberOfUpgraders = 4;
+    const minNumberOfBuilders = 4;
+    const minNumberOfUpgraders = 3;
     const minNumberOfRepairers = 1;
     var currentNumberOfHarvesters = _.sum(Game.creeps, (x) => x.memory.role == "harvester");
     var currentNumberOfBuilders = _.sum(Game.creeps, (x) => x.memory.role == "builder");

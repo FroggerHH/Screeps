@@ -15,7 +15,7 @@ module.exports = {
             var source = creep.pos.findClosestByPath(FIND_SOURCES);
             if (creep.harvest(source) == ERR_NOT_IN_RANGE) {
                 if (creep.moveTo(source) == ERR_NO_PATH) {
-                    source = creep.pos.findClosestByPath(FIND_TOMBSTONES);
+                    source = creep.pos.findClosestByPath(FIND_DROPPED_RESOURCES);
                     if (creep.harvest(source) == ERR_NOT_IN_RANGE) {
                         var moveToTOMBSTON_result = creep.moveTo(source);
                         if (moveToTOMBSTON_result == ERR_NO_PATH || source == undefined) {
