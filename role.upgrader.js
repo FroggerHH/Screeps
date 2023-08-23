@@ -1,3 +1,5 @@
+var roleHarvester = require('role.harvester');
+
 module.exports = {
     run: function (creep) {
         creep.memory.working = creep.carry.energy >= creep.carryCapacity - 5 ? true : false;
@@ -10,7 +12,7 @@ module.exports = {
         } else {
             var source = creep.pos.findClosestByPath(FIND_SOURCES);
             if (creep.harvest(source) == ERR_NOT_IN_RANGE) {
-                creep.moveTo(source);
+                if(creep.moveTo(source) == ERR_NO_PATH) roleHarvester.run(creep);
             }
         }
     }
