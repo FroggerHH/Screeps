@@ -1,4 +1,4 @@
-var roleHarvester = require('Code/role.harvester');
+var roleHarvester = require('role.harvester');
 
 module.exports = {
     run: function (creep) {
