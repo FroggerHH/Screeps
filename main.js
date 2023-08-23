@@ -5,7 +5,7 @@ var roleBuilder = require('role.builder');
 var roleRepairer = require('role.repairer');
 
 module.exports.loop = function () {
-    //ClearMenory();
+    //ClearMemory();
     for (var creepName in Memory.creeps) {
         var gameCreep = Game.creeps[creepName];
         if (gameCreep == undefined) {
@@ -39,6 +39,7 @@ module.exports.loop = function () {
             Game.spawns.MainSpawn.room.energyAvailable :
             Game.spawns.MainSpawn.room.energyCapacityAvailable;
         var name = Game.spawns.MainSpawn.createCustomCreep(energy, role);
+        //if(name < 0) name = Game.spawns.MainSpawn.createCustomCreep(Game.spawns.MainSpawn.room.energyCapacity, role);
         if (!(name < 0)) console.log("Creating new creep " + name + " " + role);
     }
 
@@ -74,5 +75,5 @@ module.exports.loop = function () {
         }
     }
 
-    Game.spawns.MainSpawn.createCreep([WORK, WORK, MOVE, CARRY], undefined, {role: "harvester", working: false});
+
 }
