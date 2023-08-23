@@ -6,7 +6,6 @@ module.exports = function () {
 
             for (var i = 0; i < numberOfParts; i++) {
                 body.push(WORK);
-                body.push(WORK);
                 body.push(CARRY);
                 body.push(MOVE);
             }

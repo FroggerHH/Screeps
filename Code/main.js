@@ -1,8 +1,8 @@
-require('prototype.spawn')();
-var roleHarvester = require('role.harvester');
-var roleUpgrader = require('role.upgrader');
-var roleBuilder = require('role.builder');
-var roleRepairer = require('role.repairer');
+require('Code/prototype.spawn')();
+var roleHarvester = require('Code/role.harvester');
+var roleUpgrader = require('Code/role.upgrader');
+var roleBuilder = require('Code/role.builder');
+var roleRepairer = require('Code/role.repairer');
 
 module.exports.loop = function () {
     //ClearMenory();
@@ -73,4 +73,6 @@ module.exports.loop = function () {
                 break;
         }
     }
+
+    Game.spawns.MainSpawn.createCreep([WORK, WORK, MOVE, CARRY], undefined, {role: "harvester", working: false});
 }
