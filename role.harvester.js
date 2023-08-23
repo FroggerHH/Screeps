@@ -15,12 +15,12 @@ module.exports = {
             var source = creep.pos.findClosestByPath(FIND_SOURCES);
             if (creep.harvest(source) == ERR_NOT_IN_RANGE) {
                 if (creep.moveTo(source) == ERR_NO_PATH) {
-                    source = creep.pos.findClosestByPath(FIND_ES);
+                    source = creep.pos.findClosestByPath(FIND_TOMBSTONES);
                     if (creep.harvest(source) == ERR_NOT_IN_RANGE) {
                         var moveToTOMBSTON_result = creep.moveTo(source);
                         if (moveToTOMBSTON_result == ERR_NO_PATH || source == undefined) {
-                            source = creep.pos.findClosestByPath(FIND_STRUCTURES, {
-                                filter: (s) => s.structureType == STRUCTURE_SPAWN && s.owner == "Screeps"
+                            source = creep.pos.findClosestByPath(FIND_SOURCES, {
+                                filter: (s) => s.owner == "Screeps"
                             });
                             console.log("Spawn is " + source)
                             if (creep.harvest(source) == ERR_NOT_IN_RANGE)
