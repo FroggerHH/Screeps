@@ -12,8 +12,7 @@ function work(creep) {
 module.exports = {
     run: function (creep) {
         creep.memory.currentRole = 'upgrader';
-        //creep.memory.working = creep.carry.energy >= creep.carryCapacity - 5 ? true : false;
-        // if (creep.memory.building == true) creep.memory.working = true;
+        if(creep.spawning) return;
 
         if (creep.memory.working && creep.store[RESOURCE_ENERGY] === 0) {
             creep.memory.working = false;

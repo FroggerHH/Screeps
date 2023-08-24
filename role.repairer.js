@@ -6,6 +6,7 @@ module.exports =
     {
         run: function (creep) {
             creep.memory.currentRole = 'repairer';
+            if(creep.spawning) return;
             var working = creep.memory.working;
             creep.memory.working = creep.carry.energy >= creep.carryCapacity - 1 ? true : false;
 

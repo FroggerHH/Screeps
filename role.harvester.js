@@ -4,6 +4,7 @@ var roleBuilder = require('role.builder');
 module.exports = {
     run: function (creep) {
         creep.memory.currentRole = 'harvester';
+        if(creep.spawning) return;
         var working = creep.memory.working;
         creep.memory.working = creep.carry.energy >= creep.carryCapacity - 5 ? true : false;
 
