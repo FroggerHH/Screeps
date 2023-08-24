@@ -16,8 +16,9 @@ module.exports = {
                     color = 'orange';
                     break;
                 case "upgrader":
-                    roleEmoji = "🔎";
-                    fontSize = 0.5;
+                    roleEmoji = "⚙";
+                    fontSize = 0.9;
+                    color = 'white';
                     break;
                 case "repairer":
                     roleEmoji = "🔧";
