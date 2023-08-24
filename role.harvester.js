@@ -1,5 +1,9 @@
+var moveToTarget = require('MoveToTarget');
+var roleBuilder = require('role.builder');
+
 module.exports = {
     run: function (creep) {
+        creep.memory.currentRole = 'harvester';
         var working = creep.memory.working;
         creep.memory.working = creep.carry.energy >= creep.carryCapacity - 5 ? true : false;
 
@@ -9,27 +13,17 @@ module.exports = {
                     s.structureType == STRUCTURE_EXTENSION ||
                     s.structureType == STRUCTURE_TOWER) && s.energy < s.energyCapacity - 1
             });
-            if (creep.transfer(structure, RESOURCE_ENERGY) == ERR_NOT_IN_RANGE)
-                creep.moveTo(structure);
+            var transferResult = creep.transfer(structure, RESOURCE_ENERGY);
+            if (transferResult == ERR_NOT_IN_RANGE)
+                creep.moveTo(structure, {visualizePathStyle: {}});
+            else if (structure == undefined) {
+                roleBuilder.run(creep);
+            }
         } else {
-            var source = creep.pos.findClosestByPath(FIND_SOURCES);
-            if (creep.harvest(source) == ERR_NOT_IN_RANGE) {
-                if (creep.moveTo(source) == ERR_NO_PATH) {
-                    source = creep.pos.findClosestByPath(FIND_DROPPED_RESOURCES);
-                    if (source != undefined) {
-                        if (creep.harvest(source) == ERR_NOT_IN_RANGE)
-                            creep.moveTo(source);
-                    }
-                    else {
-                        source = creep.pos.findClosestByPath(FIND_TOMBSTONES);
-                        if (source != undefined) {
-                            if (creep.harvest(source) == ERR_NOT_IN_RANGE)
-                                creep.moveTo(source);
-                        }
+            if (_.sum(Game.constructionSites, []) == 0)
+                creep.room.createConstructionSite(creep.pos.x, creep.pos.y, STRUCTURE_ROAD);
 
-                    }
-                }
-            }// else if(source == ERR_NO_PATH) roleBuilder.run(creep);
+            if (moveToTarget.findResource(creep) == false) roleBuilder.run(creep);
         }
     }
 };

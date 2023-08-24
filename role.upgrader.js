@@ -1,21 +1,35 @@
-//var roleHarvester = require('role.harvester');
+const moveToTarget = require("./MoveToTarget");
+
+function work(creep) {
+    const controller = creep.room.controller;
+    if (controller) {
+        if (creep.upgradeController(controller) === ERR_NOT_IN_RANGE) {
+            creep.moveTo(controller, {visualizePathStyle: {}});
+        }
+    }
+}
 
 module.exports = {
     run: function (creep) {
-        creep.memory.working = creep.carry.energy >= creep.carryCapacity - 5 ? true : false;
+        creep.memory.currentRole = 'upgrader';
+        //creep.memory.working = creep.carry.energy >= creep.carryCapacity - 5 ? true : false;
+        // if (creep.memory.building == true) creep.memory.working = true;
 
-        if (creep.memory.working == true) {
-            if (creep.transfer(creep.room.controller, RESOURCE_ENERGY) == ERR_NOT_IN_RANGE)
-                if (creep.moveTo(creep.room.controller) == ERR_NO_PATH) {
-                    creep.moveTo(Game.spawns.MainSpawn);
-                }
+        if (creep.memory.working && creep.store[RESOURCE_ENERGY] === 0) {
+            creep.memory.working = false;
+            //creep.say('🔄 Harvest');
+        }
+        if (!creep.memory.working && creep.store.getFreeCapacity() === 0) {
+            creep.memory.working = true;
+            creep.say('⚡ Upgrade');
+        }
+
+        if (creep.memory.working) {
+            work(creep);
         } else {
-            var source = creep.pos.findClosestByPath(FIND_SOURCES);
-            if (creep.harvest(source) == ERR_NOT_IN_RANGE) {
-                if(creep.moveTo(source) == ERR_NO_PATH){
-                   // roleHarvester.run(creep);
-                }
-            }
+            var findResource = moveToTarget.findResource(creep);
+            if (findResource == false && creep.store[RESOURCE_ENERGY] > 0)
+                work(creep);
         }
     }
 };

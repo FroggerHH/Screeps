@@ -1,8 +1,11 @@
 var roleBuilder = require('role.builder');
+const moveToTarget = require("./MoveToTarget");
+const roleUpgrader = require("./role.upgrader");
 
 module.exports =
     {
         run: function (creep) {
+            creep.memory.currentRole = 'repairer';
             var working = creep.memory.working;
             creep.memory.working = creep.carry.energy >= creep.carryCapacity - 1 ? true : false;
 
@@ -13,10 +16,9 @@ module.exports =
                     });
 
                 if (structure == undefined) roleBuilder.run(creep);
-                else if (creep.repair(structure) == ERR_NOT_IN_RANGE) creep.moveTo(structure);
+                else if (creep.repair(structure) == ERR_NOT_IN_RANGE) creep.moveTo(structure, {visualizePathStyle: {}});
             } else {
-                var source = creep.pos.findClosestByPath(FIND_SOURCES);
-                if (creep.harvest(source) == ERR_NOT_IN_RANGE) creep.moveTo(source);
+                if (moveToTarget.findResource(creep) == false)roleUpgrader.run(creep); roleBuilder.run(creep);
             }
         }
     };
